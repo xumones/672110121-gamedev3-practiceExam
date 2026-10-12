@@ -46,6 +46,14 @@ namespace RavipoteP
             SetSFXVolume(PlayerPrefs.GetFloat("SFXVolume", 1f));
         }
 
+        private void Start()
+        {
+            if (bgmSource != null && !bgmSource.isPlaying && bgmClips != null && bgmClips.Length > 0)
+            {
+                PlayBGMByIndex(0);
+            }
+        }
+
         public void PlayBGM(AudioClip clip)
         {
             if (bgmSource == null) return;

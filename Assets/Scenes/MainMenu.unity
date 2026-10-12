@@ -1290,9 +1290,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd4c9991857d7c544b6d9d6439df5bb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RavipoteP.AudioManager
-  bgmSource: {fileID: 678195066}
-  sfxSource: {fileID: 678195065}
-  bgmClips: []
+  bgmSource: {fileID: 678195068}
+  sfxSource: {fileID: 678195066}
+  bgmClips:
+  - {fileID: 8300000, guid: 87acae5bbeaf858419cb0d5470650180, type: 3}
+  - {fileID: 8300000, guid: 8e0c828b58c8c5e49a24f86fa0927f14, type: 3}
+  - {fileID: 8300000, guid: bb9e6384de806d24e8a4fa1843d4f7ff, type: 3}
 --- !u!82 &678195068
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1305,10 +1308,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
