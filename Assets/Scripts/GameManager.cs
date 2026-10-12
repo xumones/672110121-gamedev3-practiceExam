@@ -4,7 +4,23 @@ namespace RavipoteP
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance { get; private set; }
+        private static GameManager _instance;
+        public static GameManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindFirstObjectByType<GameManager>();
+                    if (_instance == null)
+                    {
+                        var go = new GameObject("GameManager");
+                        _instance = go.AddComponent<GameManager>();
+                    }
+                }
+                return _instance;
+            }
+        }
 
         public int Score { get; private set; } = 0;
         public bool IsWin { get; private set; } = false;
@@ -12,13 +28,13 @@ namespace RavipoteP
 
         private void Awake()
         {
-            if (Instance != null && Instance != this)
+            if (_instance != null && _instance != this)
             {
                 Destroy(gameObject);
                 return;
             }
 
-            Instance = this;
+            _instance = this;
             DontDestroyOnLoad(gameObject);
         }
 

@@ -6,20 +6,36 @@ namespace RavipoteP
 {
     public class SceneNavigator : MonoBehaviour
     {
-        public static SceneNavigator Instance { get; private set; }
+        private static SceneNavigator _instance;
+        public static SceneNavigator Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindFirstObjectByType<SceneNavigator>();
+                    if (_instance == null)
+                    {
+                        var go = new GameObject("SceneNavigator");
+                        _instance = go.AddComponent<SceneNavigator>();
+                    }
+                }
+                return _instance;
+            }
+        }
 
         private readonly Stack<string> sceneHistory = new Stack<string>();
         public string LastPlayedStage { get; set; } = "Stage1_Capsule";
 
         private void Awake()
         {
-            if (Instance != null && Instance != this)
+            if (_instance != null && _instance != this)
             {
                 Destroy(gameObject);
                 return;
             }
 
-            Instance = this;
+            _instance = this;
             DontDestroyOnLoad(gameObject);
         }
 

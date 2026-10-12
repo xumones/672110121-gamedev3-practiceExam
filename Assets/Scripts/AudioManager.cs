@@ -5,7 +5,23 @@ namespace RavipoteP
     [RequireComponent(typeof(AudioSource))]
     public class AudioManager : MonoBehaviour
     {
-        public static AudioManager Instance { get; private set; }
+        private static AudioManager _instance;
+        public static AudioManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindFirstObjectByType<AudioManager>();
+                    if (_instance == null)
+                    {
+                        var go = new GameObject("AudioManager");
+                        _instance = go.AddComponent<AudioManager>();
+                    }
+                }
+                return _instance;
+            }
+        }
 
         [Header("Audio Sources")]
         [SerializeField] private AudioSource bgmSource;
@@ -16,13 +32,13 @@ namespace RavipoteP
 
         private void Awake()
         {
-            if (Instance != null && Instance != this)
+            if (_instance != null && _instance != this)
             {
                 Destroy(gameObject);
                 return;
             }
 
-            Instance = this;
+            _instance = this;
             DontDestroyOnLoad(gameObject);
 
             // Load saved volumes
