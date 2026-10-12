@@ -39,8 +39,15 @@ namespace RavipoteP
             DontDestroyOnLoad(gameObject);
         }
 
+        public static void UnlockCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
         public void LoadScene(string sceneName)
         {
+            UnlockCursor();
             string currentScene = SceneManager.GetActiveScene().name;
             if (currentScene != sceneName)
             {

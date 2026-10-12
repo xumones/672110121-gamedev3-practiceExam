@@ -9,6 +9,9 @@ namespace RavipoteP
 
         private void Start()
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             if (scoreText != null && GameManager.Instance != null)
             {
                 scoreText.text = $"Score: {GameManager.Instance.Score}";

@@ -102,6 +102,9 @@ namespace RavipoteP
             if (!IsGameActive) return;
             IsGameActive = false;
 
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.FinishGame(CurrentScore, true);
@@ -114,6 +117,9 @@ namespace RavipoteP
             if (!IsGameActive) return;
             IsGameActive = false;
 
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             Debug.Log($"Stage 1 Game Over: {reason} Final Score: {CurrentScore}");
             if (GameManager.Instance != null)
             {
@@ -124,7 +130,15 @@ namespace RavipoteP
 
         public void ReturnToMainMenu()
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneNavigator.Instance?.GoToMainMenu();
+        }
+
+        private void OnDestroy()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 }
