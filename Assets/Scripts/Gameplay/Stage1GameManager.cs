@@ -59,6 +59,7 @@ namespace RavipoteP
             // Check fall off map
             if (playerTransform != null && playerTransform.position.y < fallKillY)
             {
+                AudioManager.Instance?.PlayFallSound();
                 TriggerGameOver("Fell off the map!");
                 return;
             }

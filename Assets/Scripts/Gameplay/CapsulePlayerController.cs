@@ -104,7 +104,7 @@ namespace RavipoteP
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 if (jumpSFX != null && AudioManager.Instance != null)
                 {
-                    AudioManager.Instance.PlaySFX(jumpSFX);
+                    AudioManager.Instance.PlaySFX(jumpSFX, 0.55f);
                 }
             }
 

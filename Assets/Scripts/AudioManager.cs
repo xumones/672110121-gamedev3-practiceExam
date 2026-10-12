@@ -30,6 +30,13 @@ namespace RavipoteP
         [Header("BGM Clips")]
         [SerializeField] private AudioClip[] bgmClips;
 
+        [Header("SFX Clips")]
+        [SerializeField] private AudioClip buttonClickSFX;
+        [SerializeField] private AudioClip winSFX;
+        [SerializeField] private AudioClip gameOverSFX;
+        [SerializeField] private AudioClip jumpSFX;
+        [SerializeField] private AudioClip fallSFX;
+
         private void Awake()
         {
             if (_instance != null && _instance != this)
@@ -41,16 +48,65 @@ namespace RavipoteP
             _instance = this;
             DontDestroyOnLoad(gameObject);
 
+            // Ensure AudioSources exist
+            if (bgmSource == null)
+            {
+                bgmSource = gameObject.AddComponent<AudioSource>();
+                bgmSource.playOnAwake = false;
+                bgmSource.loop = true;
+            }
+            if (sfxSource == null)
+            {
+                sfxSource = gameObject.AddComponent<AudioSource>();
+                sfxSource.playOnAwake = false;
+                sfxSource.loop = false;
+            }
+
             // Load saved volumes
             SetBGMVolume(PlayerPrefs.GetFloat("BGMVolume", 1f));
             SetSFXVolume(PlayerPrefs.GetFloat("SFXVolume", 1f));
         }
 
+        private void OnEnable()
+        {
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
         private void Start()
         {
+            HookAllSceneButtons();
             if (bgmSource != null && !bgmSource.isPlaying && bgmClips != null && bgmClips.Length > 0)
             {
                 PlayBGMByIndex(0);
+            }
+        }
+
+        private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+        {
+            HookAllSceneButtons();
+
+            if (scene.name == "Win")
+            {
+                PlayWinSound();
+            }
+            else if (scene.name == "GameOver")
+            {
+                PlayGameOverSound();
+            }
+        }
+
+        public void HookAllSceneButtons()
+        {
+            var buttons = FindObjectsByType<UnityEngine.UI.Button>(FindObjectsSortMode.None);
+            foreach (var btn in buttons)
+            {
+                btn.onClick.RemoveListener(PlayButtonClick);
+                btn.onClick.AddListener(PlayButtonClick);
             }
         }
 
@@ -69,10 +125,40 @@ namespace RavipoteP
             PlayBGM(bgmClips[index]);
         }
 
-        public void PlaySFX(AudioClip clip)
+        public void PlaySFX(AudioClip clip, float volumeScale = 1f)
         {
             if (sfxSource == null || clip == null) return;
-            sfxSource.PlayOneShot(clip);
+            sfxSource.PlayOneShot(clip, volumeScale);
+        }
+
+        public void PlayButtonClick()
+        {
+            if (buttonClickSFX != null)
+                PlaySFX(buttonClickSFX, 0.7f);
+        }
+
+        public void PlayWinSound()
+        {
+            if (winSFX != null)
+                PlaySFX(winSFX, 0.85f);
+        }
+
+        public void PlayGameOverSound()
+        {
+            if (gameOverSFX != null)
+                PlaySFX(gameOverSFX, 0.85f);
+        }
+
+        public void PlayJumpSound(float volumeScale = 0.55f)
+        {
+            if (jumpSFX != null)
+                PlaySFX(jumpSFX, volumeScale);
+        }
+
+        public void PlayFallSound()
+        {
+            if (fallSFX != null)
+                PlaySFX(fallSFX);
         }
 
         public void StopBGM()

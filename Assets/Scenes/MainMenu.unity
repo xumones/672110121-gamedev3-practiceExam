@@ -1296,6 +1296,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 87acae5bbeaf858419cb0d5470650180, type: 3}
   - {fileID: 8300000, guid: 8e0c828b58c8c5e49a24f86fa0927f14, type: 3}
   - {fileID: 8300000, guid: bb9e6384de806d24e8a4fa1843d4f7ff, type: 3}
+  buttonClickSFX: {fileID: 8300000, guid: 6798cfd1a3932014598670d629ad06a9, type: 3}
+  winSFX: {fileID: 8300000, guid: 34c3b19a160dbbc47ae16471da85d7f4, type: 3}
+  gameOverSFX: {fileID: 8300000, guid: 63b45dbdaf3d79c41863fdbf23c115e9, type: 3}
+  jumpSFX: {fileID: 8300000, guid: 9778b2de85b91854390e589449ac50db, type: 3}
+  fallSFX: {fileID: 8300000, guid: 2c523f0d3577b3846b1ae695399f4a84, type: 3}
 --- !u!82 &678195068
 AudioSource:
   m_ObjectHideFlags: 0

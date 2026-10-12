@@ -12,6 +12,8 @@ namespace RavipoteP
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
+            AudioManager.Instance?.PlayWinSound();
+
             if (scoreText != null && GameManager.Instance != null)
             {
                 scoreText.text = $"Score: {GameManager.Instance.Score}";
